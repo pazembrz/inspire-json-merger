@@ -57,9 +57,22 @@ jobs:
           parallel-finished: true
 
   Release:
+    if: ${{ github.event_name == 'push' }}
     needs: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/checkout@v2
+        with:
+          python-version: 2.7
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Build package
         if: ${{ github.event_name == 'push' }}
         run: |
