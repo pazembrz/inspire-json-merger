@@ -46,7 +46,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           flag-name: run-${{ matrix.test_number }}
 
-  Coveralls:
+  Finish:
     needs: Test
     runs-on: ubuntu-latest
     steps:
