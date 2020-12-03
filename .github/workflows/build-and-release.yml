@@ -60,16 +60,13 @@ jobs:
     needs: Test
     runs-on: ubuntu-latest
     steps:
-      - name: debug
-        run: |
-          echo "${{ github.event_name }} ${{ matrix.python-version }}"
       - name: Build package
-        if: ${{ github.event_name == 'push' && matrix.python-version == '2.7'  }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           python setup.py sdist bdist_wheel
 
       - name: Publish package
-        if: ${{ github.event_name == 'push' && matrix.python-version == '2.7'  }}
+        if: ${{ github.event_name == 'push' }}
         uses: pypa/gh-action-pypi-publish@v1.3.1
         with:
           user: __token__
